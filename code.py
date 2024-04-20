@@ -4,6 +4,9 @@ import supervisor
 
 print(supervisor.runtime.usb_connected)
 
+MODE = "LOG"
+MODE = "LIVE"
+
 sensors = Sensors()
 sensors.configure()
 log = Logger("log")
@@ -39,6 +42,8 @@ while True:
     except Exception as e:
         print(f"LIS3MDL Error {e}, continuing...")
     
-    # print(f"Pressure: {pressure:.2f} Temp: {temperature:.2f} Humidity: {humidity:.2f} Altitude: {altitude:.2f} Accel: ({accel[0]:.2f}, {accel[1]:.2f}, {accel[2]:.2f}) Gyro: ({gyro[0]:.2f}, {gyro[1]:.2f}, {gyro[2]:.2f}) Magnet: ({magnet[0]:.2f}, {magnet[1]:.2f}, {magnet[2]:.2f})")
-    log.log(temperature, humidity, pressure, altitude, accel, gyro, magnet) # About 3.17 hours of data can be stored on the flash
+    if MODE is "LOG":
+        log.log(temperature, humidity, pressure, altitude, accel, gyro, magnet) # About 3.17 hours of data can be stored on the flash
+    elif MODE is "LIVE":
+        print(f"Pressure: {pressure:.2f} Temp: {temperature:.2f} Humidity: {humidity:.2f} Altitude: {altitude:.2f} Accel: ({accel[0]:.2f}, {accel[1]:.2f}, {accel[2]:.2f}) Gyro: ({gyro[0]:.2f}, {gyro[1]:.2f}, {gyro[2]:.2f}) Magnet: ({magnet[0]:.2f}, {magnet[1]:.2f}, {magnet[2]:.2f})")
     
