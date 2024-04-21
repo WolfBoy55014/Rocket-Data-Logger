@@ -1,11 +1,13 @@
 from sensors import Sensors
 from logger import Logger
 import supervisor
+from debug import Debug
 
 print(supervisor.runtime.usb_connected)
 
 MODE = "LOG"
-MODE = "LIVE"
+# Uncomment the line below to enable live logging
+# MODE = "LIVE"
 
 sensors = Sensors()
 sensors.configure()
@@ -44,6 +46,8 @@ while True:
     
     if MODE is "LOG":
         log.log(temperature, humidity, pressure, altitude, accel, gyro, magnet) # About 3.17 hours of data can be stored on the flash
+        print("Logging...")
     elif MODE is "LIVE":
         print(f"Pressure: {pressure:.2f} Temp: {temperature:.2f} Humidity: {humidity:.2f} Altitude: {altitude:.2f} Accel: ({accel[0]:.2f}, {accel[1]:.2f}, {accel[2]:.2f}) Gyro: ({gyro[0]:.2f}, {gyro[1]:.2f}, {gyro[2]:.2f}) Magnet: ({magnet[0]:.2f}, {magnet[1]:.2f}, {magnet[2]:.2f})")
-    
+        
+    Debug.toggle_led()
