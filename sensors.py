@@ -78,7 +78,7 @@ class Sensors:
             print(f"BME280 sensor error: {e}")
             
         # Diplay the status of BME280
-        Debug.status(bme_working, (48, 116, 227))
+        Debug.status(bme_working, (0, 255, 255))
         
         # Test LSM6DSOX sensor
         print("Testing LSM6DSOX sensor...")
@@ -92,7 +92,7 @@ class Sensors:
             print(f"LSM6DSOX sensor error: {e}")
         
         # Display the status of LSM6DSOX
-        Debug.status(sox_working, (227, 116, 48))
+        Debug.status(sox_working, (255, 50, 0))
         
         # Test LIS3MDL sensor
         print("Testing LIS3MDL sensor...")
@@ -106,7 +106,7 @@ class Sensors:
             print(f"LIS3MDL sensor error: {e}")
         
         # Display the status of LIS3MDL
-        Debug.status(lis_working, (194, 50, 227))
+        Debug.status(lis_working, (255, 0, 255))
         
         # End the debug timer
         print()
