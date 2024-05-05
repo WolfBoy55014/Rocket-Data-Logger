@@ -12,6 +12,8 @@
     "circuitpython.board.vid": "0x239A",
     "circuitpython.board.pid": "0x80F2",
     "cSpell.words": [
-        "circuitpython"
+        "circuitpython",
+        "digitalio",
+        "microcontroller"
     ]
 }

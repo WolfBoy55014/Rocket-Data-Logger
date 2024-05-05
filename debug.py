@@ -22,6 +22,12 @@ class Debug:
     
     def toggle_led():
         led.value = not led.value
+        
+    def led_on():
+        led.value = True
+    
+    def led_off():
+        led.value = False
     
     def timer_start():
         global start_time
