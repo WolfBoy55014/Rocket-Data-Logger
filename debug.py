@@ -22,12 +22,6 @@ class Debug:
     
     def toggle_led():
         led.value = not led.value
-        
-    def led_on():
-        led.value = True
-    
-    def led_off():
-        led.value = False
     
     def timer_start():
         global start_time
@@ -37,3 +31,9 @@ class Debug:
         global start_time
         ms_duration = round((time.monotonic_ns() - start_time) / 1e6, 1)
         print(f"{task} duration: {ms_duration} ms")
+    
+    def led_on():
+        led.value = True
+    
+    def led_off():
+        led.value = False

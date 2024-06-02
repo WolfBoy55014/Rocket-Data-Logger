@@ -1,0 +1,19 @@
+# OUTPUT_MODE = "LOG" # Uncomment this line to output logs to a file
+OUTPUT_MODE = "LIVE" # Uncomment this line to output logs to the console
+
+# Log Directory
+LOG_DIR = "logs/"
+
+# Max number of logs alowed in the logs folder
+MAX_LOGS = 10
+
+# Number of lines to store in RAM before saving to logs.
+LOG_BUFFER_LENGTH = 3
+
+# Minimum amount of RAM before clearing the log buffer
+# This should be close to 1200 * buffer length
+# The garbage collector will also run when the RAM left
+# is less than this value and automatic collection is off
+MIN_RAM_BEFORE_CLEAR = 3600 # 3.6kB
+
+# DISABLE_GC = "TRUE" # Uncomment this line to disable automatic garbage collection

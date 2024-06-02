@@ -55,11 +55,18 @@ _BME280_CHIPID = const(0x60)
 _BME280_REGISTER_CHIPID = const(0xD0)
 """overscan values for temperature, pressure, and humidity"""
 OVERSCAN_X1 = const(0x01)
+OVERSCAN_X2 = const(0x02)
+OVERSCAN_X4 = const(0x03)
+OVERSCAN_X8 = const(0x04)
 OVERSCAN_X16 = const(0x05)
 """mode values"""
 _BME280_MODES = (0x00, 0x01, 0x03)
 """iir_filter values"""
-IIR_FILTER_DISABLE = const(0)
+IIR_FILTER_DISABLE = const(0x00)
+IIR_FILTER_2 = const(0x01)
+IIR_FILTER_4 = const(0x02)
+IIR_FILTER_8 = const(0x03)
+IIR_FILTER_16 = const(0x04)
 """
 standby timeconstant values
 TC_X[_Y] where X=milliseconds and Y=tenths of a millisecond

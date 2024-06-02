@@ -5,10 +5,7 @@ from debug import Debug
 import digitalio
 import board
 from time import sleep
-
-MODE = "LOG"
-# Uncomment the line below to enable live logging
-# MODE = "LIVE"
+import os
 
 # Check if the board was soft-reset
 if supervisor.runtime.run_reason == supervisor.RunReason.SUPERVISOR_RELOAD:
@@ -18,17 +15,33 @@ if supervisor.runtime.run_reason == supervisor.RunReason.SUPERVISOR_RELOAD:
     microcontroller.on_next_reset(microcontroller.RunMode.SAFE_MODE)
     microcontroller.reset()
 
+MODE = os.getenv("OUTPUT_MODE")
+MIN_RAM_BEFORE_CLEAR = int(os.getenv("MIN_RAM_BEFORE_CLEAR"))
+DISABLE_GC = os.getenv("DISABLE_GC", "FALSE") == "TRUE"
+if DISABLE_GC:
+    import gc
+    gc.disable()
+
+# Init sensors
 sensors = Sensors()
 sensors.configure()
+
+# Init logging
 if MODE == "LOG":
     log = Logger("log")
 
+# Config Shutdown button (BOOTSEL)
 shutdown_pin = digitalio.DigitalInOut(board.BUTTON)
 shutdown_pin.direction = digitalio.Direction.INPUT
 shutdown_pin.pull = digitalio.Pull.UP
 
 while True:
     
+    # Pseudo-auto GC
+    if DISABLE_GC and gc.mem_free() < MIN_RAM_BEFORE_CLEAR:
+        gc.collect()
+        
+    # Detect if shutdown has been pressed
     if not shutdown_pin.value:
         Debug.led_on()
         sleep(0.7)
@@ -72,7 +85,6 @@ while True:
     
     if MODE is "LOG":
         log.log(temperature, humidity, pressure, altitude, accel, gyro, magnet) # About 3.17 hours of data can be stored on the flash
-        print("Logging...")
     elif MODE is "LIVE":
         print(f"Pressure: {pressure:.2f} Temp: {temperature:.2f} Humidity: {humidity:.2f} Altitude: {altitude:.2f} Accel: ({accel[0]:.2f}, {accel[1]:.2f}, {accel[2]:.2f}) Gyro: ({gyro[0]:.2f}, {gyro[1]:.2f}, {gyro[2]:.2f}) Magnet: ({magnet[0]:.2f}, {magnet[1]:.2f}, {magnet[2]:.2f})")
     
