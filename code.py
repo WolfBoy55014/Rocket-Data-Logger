@@ -39,7 +39,9 @@ while True:
     
     # Pseudo-auto GC
     if DISABLE_GC and gc.mem_free() < MIN_RAM_BEFORE_CLEAR:
+        Debug.timer_start()
         gc.collect()
+        Debug.timer_stop("Collecting")
         
     # Detect if shutdown has been pressed
     if not shutdown_pin.value:
@@ -61,6 +63,7 @@ while True:
     gyro = (0, 0, 0)
     magnet = (0, 0, 0)
     
+    Debug.timer_start()
     # Get Atmospheric data
     try:
         pressure = sensors.pressure
@@ -82,6 +85,9 @@ while True:
         magnet = sensors.magnetic
     except Exception as e:
         print(f"LIS3MDL Error {e}, continuing...")
+    
+    print("----------------------------------")
+    Debug.timer_stop("Get Data")
     
     if MODE is "LOG":
         log.log(temperature, humidity, pressure, altitude, accel, gyro, magnet) # About 3.17 hours of data can be stored on the flash

@@ -59,13 +59,14 @@ class Logger:
                 )
 
     def log(self, temp, humidity, pressure, altitude, acceleration, gyro, magnetometer):
+        
+        Debug.timer_start()
+        print(gc.mem_free())
 
         # Append data to buffer
         self.buffer.append(
             f'{time.monotonic()},{temp},{humidity},{pressure},{altitude},"{acceleration}","{gyro}","{magnetometer}"'
         )
-        
-        print(gc.mem_free())
 
         if len(self.buffer) >= int(LOG_BUFFER_LENGTH) and gc.mem_free() > int(MIN_RAM_BEFORE_CLEAR):
             # If the buffer is full, write the data to the CSV file
@@ -76,3 +77,6 @@ class Logger:
                                     
                 # Clear the buffer
                 self.buffer = []
+
+        Debug.timer_stop("Write")
+        print("----------------------------------")

@@ -30,7 +30,7 @@ class Sensors:
             # pressure readings, as they are really responsive. Increase to
             # reduce noise, decrease to increase responsiveness.
             self._bme280.overscan_humidity = bme280.OVERSCAN_X1
-            self._bme280.overscan_pressure = bme280.OVERSCAN_X4
+            self._bme280.overscan_pressure = bme280.OVERSCAN_X16
             self._bme280.overscan_temperature = bme280.OVERSCAN_X1
             self._bme280._iir_filter = bme280.IIR_FILTER_4
             self._bme280._write_config()
